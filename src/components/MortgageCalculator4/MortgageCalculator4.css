@@ -1,0 +1,69 @@
+.App {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header {
+    font-size: 20px;
+    font-weight: 800;
+    background-color: #179B36;
+    color: #fff;
+    padding: 24px;
+    margin-top: -10px;
+  }
+  
+  .info {
+    width: 62rem;
+    margin: auto;
+    margin-top: 2rem;
+  }
+  
+  .info .highlight {
+    font-weight: 800;
+  }
+  
+  .row {
+    display: flex;
+    width: 62rem;
+    border: 2px solid #E6E6E6;
+    /* height: 430px; */
+    margin: 40px auto;
+    box-sizing: border-box;
+  }
+  
+  .row .col {
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .col-1 {
+    background-color: #F3F4F8;
+  }
+  
+  
+  @media (max-width: 1020px) {
+  
+    .row,
+    .info {
+      width: 50rem;
+    }
+  }
+  
+  @media (max-width: 810px) {
+    .info {
+      width: 100%;
+      padding: 0 30px;
+      box-sizing: border-box;
+    }
+  
+    .row {
+      display: block;
+      width: 100%;
+    }
+  
+    .row .col {
+      width: 100%;
+  
+    }
+  }

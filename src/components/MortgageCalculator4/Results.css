@@ -1,0 +1,30 @@
+.results {
+    padding: 40px 20px;
+}
+
+.results-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.total-amt {
+    font-weight: bold;
+    color: #179B36;
+}
+
+.monthly-payment {
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.monthly-payment .amount .currency {
+    font-weight: bold;
+    vertical-align: 20px;
+}
+
+.monthly-payment .amount .value {
+    font-weight: bold;
+    font-size: 3rem;
+    margin-top: -20px;
+}
