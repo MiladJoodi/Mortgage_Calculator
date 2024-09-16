@@ -1,6 +1,23 @@
+"use client";
+import { useState } from "react";
+import { AppContext } from "./context";
+import Form from "./Form";
 import "./MortgageCalculator4.css";
+import Results from "./Results";
+import { IState } from "./model";
+
+const initialState: IState = {
+  principalAmount: 0,
+  interestAmount: 0,
+  totalAmount: 0,
+  monthlyPayment: 0,
+  currency: '$',
+}
 
 const MortgageCalculator4 = () => {
+
+  const [state, dispatch] = useState(initialState);
+
   return (
     <div>
       <header className="text-2xl">
@@ -20,12 +37,18 @@ const MortgageCalculator4 = () => {
           </div>
         </section>
 
+        <AppContext.Provider value={{state, dispatch}}>
         <section>
-          <div>
-            <div>{/* <Form /> */}</div>
-            <div>{/* <Result /> */}</div>
+          <div className="row">
+            <div className="col col-1">
+              <Form />
+            </div>
+            <div className="col col-2">
+              <Results />
+            </div>
           </div>
         </section>
+        </AppContext.Provider>
       </main>
     </div>
   );
