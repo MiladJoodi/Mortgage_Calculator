@@ -12,8 +12,19 @@ const Form = () => {
   const [interestRate, setInterestRate] = useState<number>(6.5);
 
   // Functions
-  const handleLoanTermYears = (e: ChangeEvent<HTMLInputElement>) => {};
-  const handleLoanTermInMonth = (e: ChangeEvent<HTMLInputElement>) => {};
+  const handleLoanTermYears = (e: ChangeEvent<HTMLInputElement>) => {
+    const termInYears:number = Number(e.target.value);
+    const termInMonths: number = termInYears / 12;
+    setLoanTerms(termInYears, termInMonths)
+  };
+
+  const handleLoanTermInMonths = (e: ChangeEvent<HTMLInputElement>) => {
+    const termInMonth: number = Number(e.target.value);
+    const termInYears: number = termInMonth / 12;
+    setLoanTermInMonths(termInMonth)
+
+  };
+
   const setLoanTerms = (termInYears: number, termInMonths: number) => {
     setLoanTermInYears(termInYears);
     setLoanTermInMonths(termInMonths);
@@ -64,7 +75,7 @@ const Form = () => {
           id="loanTermYears"
           placeholder="E.g 48"
           value={loanTermInMonths}
-          onChange={(e) => handleLoanTermInMonth(e)}
+          onChange={(e) => handleLoanTermInMonths(e)}
         />
       </div>
 
