@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/MortgageCalculator2/Form.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/MortgageCalculator2/Form.tsx", "src/components/MortgageCalculator6/MortgageCalculator6.jsx"],
   "exclude": ["node_modules"]
 }

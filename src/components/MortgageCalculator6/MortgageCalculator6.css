@@ -1,5 +1,5 @@
 .App{
-    text-align: center;
+    /* text-align: center; */
     width: 95%;
     padding: 0 15px;
     display: flex;
@@ -10,6 +10,8 @@
     font-weight: 700;
     font-size: 30px;
     margin-top: 10px;
+    text-align: left;
+
 }
 .slider{
     width: 100%;

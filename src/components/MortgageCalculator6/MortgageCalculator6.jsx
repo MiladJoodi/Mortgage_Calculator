@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./MortgageCalculator6.css";
+import { numberWithCommas } from "./config";
 
 // constants
-export const tenureData = [12,24,36,48,60];
+export const tenureData = [12, 24, 36, 48, 60];
 
 const MortgageCalculator6 = () => {
   // States
@@ -15,24 +16,69 @@ const MortgageCalculator6 = () => {
   const [tenure, setTenure] = useState(12);
   const [emi, setEmi] = useState(0);
 
-//   calculate Emi
-  const calculateEMI = () => {};
-
-
-//   Update Emi by Slider
-  const updateEMI = (e) => {
+  //   Calculate Emi
+  const calculateEMI = (downpayment) => {
+    // EMIamount = [P x R x (1+R)^N]/[(1+R)^N-1]
     if (!cost) return;
-    
-    const dp = Number(e.target.value);
-    setDownPayment(dp.toFixed(0))
+
+    const loanAmt = cost - downpayment;
+    const rateOfInterest = interest / 100;
+    const numOfYears = tenure / 12;
+
+    const EMI =
+      (loanAmt * rateOfInterest * (1 + rateOfInterest) ** numOfYears) /
+      ((1 + rateOfInterest) ** numOfYears - 1);
+    return Number(EMI / 12).toFixed(0);
   };
 
-//   Calculate EMI and update
+  const calculateDP = (emi) => {
+    if (!cost) return;
+
+    const downPaymentPercent = 100 - (emi / calculateEMI(0)) * 100;
+    return Number((downPaymentPercent / 100) * cost);
+  };
+
+  useEffect(() => {
+    if (!(cost > 0)) {
+      setDownPayment(0);
+      setEmi(0);
+    }
+
+    const emi = calculateEMI(downPayment);
+    setEmi(emi);
+  }, [tenure]);
+
+  //   Update Emi by Slider
+  const updateEMI = (e) => {
+    if (!cost) return;
+
+    const dp = Number(e.target.value);
+    setDownPayment(dp.toFixed(0));
+
+    const emi = calculateEMI(dp);
+    setEmi(emi);
+  };
+
+  //   Calculate EMI and update
   const updateDownPayment = (e) => {
     if (!cost) return;
-    
+
     const emi = Number(e.target.value);
-    setEmi(dp.toFixed(0));
+    setEmi(emi.toFixed(0));
+
+    const dp = calculateDP(emi);
+    setDownPayment(dp);
+  };
+
+  const totalDownPayment = () => {
+    return numberWithCommas(
+      (Number(downPayment) + (cost - downPayment) * (fee / 100)).toFixed(0)
+    );
+  };
+
+  const totalEMI = () => {
+    numberWithCommas;
+    return numberWithCommas((emi * tenure).toFixed(0));
   };
 
   return (
@@ -68,6 +114,9 @@ const MortgageCalculator6 = () => {
 
       {/* Down Payment Slider */}
       <span className="title">Down Payment</span>
+      <span className="title" style={{ textDecoration: "underline" }}>
+        Total Down Payment - {totalDownPayment()}
+      </span>
       <div>
         <input
           type="range"
@@ -79,12 +128,15 @@ const MortgageCalculator6 = () => {
         />
         <div className="lables">
           <label>0</label>
-          <b>{downPayment}</b>
+          <b>{numberWithCommas(downPayment)}</b>
           <label>100%</label>
         </div>
       </div>
       {/* Loan Per Month */}
       <span className="title">Loan per Month</span>
+      <span className="title" style={{ textDecoration: "underline" }}>
+        Total Loan Amount - {totalEMI()}
+      </span>
       <div>
         <input
           type="range"
@@ -95,20 +147,25 @@ const MortgageCalculator6 = () => {
           onChange={updateDownPayment}
         />
         <div className="lables">
-          <label>{calculateEMI(cost)}</label>
-          <b>{downPayment}</b>
-          <label>{calculateEMI(0)}</label>
+          <label>{numberWithCommas(calculateEMI(cost))}</label>
+          <b>{numberWithCommas(emi)}</b>
+          <label>{numberWithCommas(calculateEMI(0))}</label>
         </div>
       </div>
 
       <span className="title">Tenure</span>
-      <div className="tenureContainer"></div>
-      {tenureData.map((t)=>{
-        return <button onClick={()=> setTenure(t)} className={`tenure ${t === tenure ? "selected": ""}`}>
-            {t}
-        </button>
-      })}
-
+      <div className="tenureContainer">
+        {tenureData.map((t) => {
+          return (
+            <button
+              onClick={() => setTenure(t)}
+              className={`tenure ${t === tenure ? "selected" : ""}`}
+            >
+              {t}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };
