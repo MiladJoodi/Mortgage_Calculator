@@ -4,6 +4,9 @@ import { useState } from "react";
 import "./MortgageCalculator7.css";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import ChartEMI from "./chartEMI";
+// import { ChartEMI } from "./chartEMI";
+// import ChartEMI from "./chartEMI";
 
 const MortgageCalculator7 = () => {
   // States
@@ -80,17 +83,23 @@ const MortgageCalculator7 = () => {
         <div className="left">
           <div className="loan-emi">
             <h3>Loan EMI / Monthly Payment</h3>
-            <div className="value">{emi !== null ? emi.toFixed(2) : "0.00"}</div>
+            <div className="value">
+              {emi !== null ? emi.toFixed(2) : "0.00"}
+            </div>
           </div>
 
           <div className="total-interest">
             <h3>Total Interest Payable</h3>
-            <div className="value">{totalInterest !== null ? totalInterest.toFixed(2) : "0.00"}</div>
+            <div className="value">
+              {totalInterest !== null ? totalInterest.toFixed(2) : "0.00"}
+            </div>
           </div>
 
           <div className="total-amount">
             <h3>Total Amount Payable</h3>
-            <div className="value">{totalPayable !== null ? totalPayable.toFixed(2) : "0.00"}</div>
+            <div className="value">
+              {totalPayable !== null ? totalPayable.toFixed(2) : "0.00"}
+            </div>
           </div>
 
           <Button className="calculate-btn" onClick={calculatorEMI}>
@@ -99,7 +108,11 @@ const MortgageCalculator7 = () => {
         </div>
 
         <div className="right">
-          <canvas id="myChart" width="400" height="400"></canvas>
+          <ChartEMI
+            loanAmount={loanAmount}
+            totalPayable={totalPayable}
+            totalInterest={totalInterest}
+          />
         </div>
       </div>
     </div>
